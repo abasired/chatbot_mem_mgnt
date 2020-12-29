@@ -93,8 +93,11 @@ ChatBot::ChatBot (ChatBot &&source){
 ChatBot &ChatBot::operator=(ChatBot &&source){
   
    std::cout << "invoking move assignemnt operator " << std::endl;
-  if (this == &source)
+  if (this == &source){
     return *this;
+  }
+  
+    delete _image;
 
   _image = source._image;
   _currentNode = source._currentNode;
@@ -106,6 +109,7 @@ ChatBot &ChatBot::operator=(ChatBot &&source){
   source._rootNode = nullptr;
   source._currentNode = nullptr;
 
+  return *this;
   
 }
 

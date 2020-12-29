@@ -227,10 +227,17 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     }
 
     // add chatbot to graph root node
-    std::unique_ptr<ChatBot> chatbot = std::make_unique<ChatBot>("../images/chatbot.png");
-    chatbot->SetChatLogicHandle(this);
-    this->SetChatbotHandle(chatbot.get());
-    chatbot->SetRootNode(rootNode);
+    //std::unique_ptr<ChatBot> chatbot = std::make_unique<ChatBot>("../images/chatbot.png");
+    /* exclusive ownership can be acheived using unique pointer or by move semantics as well.
+    unique pointer is usefull when the ownership is no changing much
+    */
+    // To display move semantics appropiately!!
+    ChatBot chatbot("../images/chatbot.png");
+
+    SetChatbotHandle(&chatbot);
+    chatbot.SetChatLogicHandle(this);
+    
+    chatbot.SetRootNode(rootNode);
     rootNode->MoveChatbotHere(std::move(chatbot));
     
     ////
