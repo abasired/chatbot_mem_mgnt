@@ -54,7 +54,8 @@ ChatBot::ChatBot(const ChatBot &source){
     _currentNode = source._currentNode;
     _rootNode = source._rootNode;
     _chatLogic = source._chatLogic;
-    
+    _chatLogic->SetChatbotHandle(this);
+       
 }
 
 ChatBot &ChatBot::operator=(const ChatBot &source){
@@ -70,6 +71,7 @@ ChatBot &ChatBot::operator=(const ChatBot &source){
   _currentNode = source._currentNode;
   _rootNode = source._rootNode;
   _chatLogic = source._chatLogic;
+  _chatLogic->SetChatbotHandle(this);
   
   return *this;
   
@@ -82,6 +84,7 @@ ChatBot::ChatBot (ChatBot &&source){
   _currentNode = source._currentNode;
   _rootNode = source._rootNode;
   _chatLogic = source._chatLogic;
+  _chatLogic->SetChatbotHandle(this);
   
   source._image = nullptr;
   source._chatLogic = nullptr;
@@ -103,6 +106,15 @@ ChatBot &ChatBot::operator=(ChatBot &&source){
   _currentNode = source._currentNode;
   _rootNode = source._rootNode;
   _chatLogic = source._chatLogic;
+
+  /*
+  Chatlogic comprises of chatbot object. Chatlogic in unique
+  Chatbot keep changing depending on the node to get respective answers
+  so in the various constrcutors we have to keep track that chatbot points 
+  original unique chatlogic instance and update the chatbot instance with respect to 
+  chatlogic whenever it changes. really cool!!!
+  */
+  _chatLogic->SetChatbotHandle(this);
   
   source._image = nullptr;
   source._chatLogic = nullptr;
